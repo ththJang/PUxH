@@ -20,8 +20,8 @@ Copy `puxh.patch` to the top-level LAMMPS directory, then run:
 
 ```bash
 cd lammps/src
-patch --dry-run -p1 < ../install.patch
-patch -p1 < ../install.patch
+patch --dry-run -p1 < ../puxh.patch
+patch -p1 < ../puxh.patch
 ```
 
 The patch will modify existing source files and create additional files for PUxH.
