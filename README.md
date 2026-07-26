@@ -1,7 +1,8 @@
-Polarizable Split-Charge Equilibration for Accurate Modeling of Non-Bonded Interactions
+# PUxH
+### Polarizable Split-Charge Equilibration for Accurate Modeling of Non-Bonded Interactions
 doi.org/
 
-# Installation
+## Installation
 
 This repository provides a patch for installing **PUxH** in LAMMPS, together with example bulk structures.
 
@@ -27,7 +28,7 @@ The patch will modify existing source files and create additional files for PUxH
 
 If the dry run reports failed hunks, reversed patches, or existing files, check that:
 
-### Example Structures
+## Example Structures
 
 Example bulk structures are provided for:
 
