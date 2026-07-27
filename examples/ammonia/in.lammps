@@ -1,0 +1,53 @@
+#----Variable section----#
+units                   real
+boundary                p p p
+special_bonds           lj/coul 1.0 1.0 1.0
+atom_style              pqeq
+bond_style              harmonic
+angle_style             harmonic
+read_data               data.ammonia
+timestep                1.0
+pair_style     hybrid/overlay coul/pqeqgauss 0 12.0 0 taper 1 reaxff/rexpon control bond 2 angle 2 vdw 1 hbond 1 nonreactive 1
+pair_coeff * * reaxff/rexpon ffield.puxh H N 
+pair_coeff * * coul/pqeqgauss 0.000000 0.0000000 0.000000 0 0.000000 0.00000 0.0000000 0.000000
+pair_coeff 1 1 coul/pqeqgauss 4.528 12.9841 .371 1 1.0 .371 2037.20061 0.0
+pair_coeff 2 2 coul/pqeqgauss 6.899 11.76 .715 1 1.0 .715 301.87609 0.0
+
+fix  pqeq all psq 1 1 3 1.0e-6 20
+neigh_modify one 10000
+neighbor 3 bin
+neigh_modify every 1 delay 0 check yes
+
+variable        sname index nh3box
+variable        targetT equal 273.15
+
+#######################################################
+compute                 pqeq all pair coul/pqeqgauss
+compute                 reax all pair reaxff/rexpon
+variable eb             equal c_reax[1]
+variable ea             equal c_reax[2]
+variable elp    equal c_reax[3]
+variable emol   equal c_reax[4]
+variable ev             equal c_reax[5]
+variable epen   equal c_reax[6]
+variable ecoa   equal c_reax[7]
+variable ehb    equal c_reax[8]
+variable et             equal c_reax[9]
+variable eco    equal c_reax[10]
+variable ew             equal c_reax[11]
+variable epqeq  equal c_pqeq
+########################################################
+
+thermo 20
+
+dump            1 all custom 20 nvt.lammpstrj id type xs ys zs vx vy vz mol sx sy sz fx fy fz q
+dump_modify     1 sort id
+thermo_style    custom step temp etotal pe ke v_eb v_ew v_ehb v_elp v_ev v_epqeq press density
+thermo_modify		line multi
+fix							shakeH all rigid/nvt molecule temp ${targetT} ${targetT} 100.0 # iso 1.1942 1.1942 2000.0
+fix             5 all momentum 1 linear 1 1 1 angular
+restart         100000 ${sname}.*.restart
+run             500000 #500 ps
+undump          1
+unfix						shakeH
+unfix						5

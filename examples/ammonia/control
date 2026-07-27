@@ -1,0 +1,3 @@
+hbond_cutoff		5.6  ! cutoff distance for hydrogen bond interactions 5.56
+thb_cutoff              0.0001 ! long - short
+thb_cutoff_sq           0.000001 ! short - short
