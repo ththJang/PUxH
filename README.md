@@ -1,6 +1,6 @@
 # PUxH
 ### Polarizable Split-Charge Equilibration for Accurate Modeling of Non-Bonded Interactions
-doi.org/
+doi.org/10.1021/acs.jpca.6c03021
 
 ## Installation
 
